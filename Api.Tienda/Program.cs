@@ -1,5 +1,7 @@
 using BussinessLogic.Features.Clientes;
 using BussinessLogic.Interfaces;
+using DataAccess.Context;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IClienteService, ClienteService>();
 
 // Add Services DA
+builder.Services.AddDbContext<TiendaDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DbTienda"));
+});
+
 
 
 var app = builder.Build();
