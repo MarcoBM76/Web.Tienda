@@ -4,6 +4,12 @@ namespace BussinessLogic.Interfaces
 {
     public interface IClienteService
     {
-        public Cliente GetCliente(int clienteId);
+        public Task<ClienteDTO?> GetCliente(int clienteId);
+        public IEnumerable<ClienteDTO> GetAllCliente();
+        public Task<int> AddCliente(AddClienteDTO cliente);
+        public Task<bool> UpdateCliente(UpdateClienteDTO cliente);
+        public Task<bool> DeleteCliente(int clienteId);
+
+
     }
 }

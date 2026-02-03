@@ -1,0 +1,49 @@
+<app-nav></app-nav>
+<div class="m-5">
+  <div class="row">
+    <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4" *ngFor="let item of articulos">
+      <div class="card h-100 shadow-sm">
+        <!--<div class="position-absolute top-0 end-0 p-2">
+          <button class="btn btn-sm btn-light border shadow-sm text-danger" (click)="eliminarArticulo(item.articuloId)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </div-->
+        <img [src]="'data:image/png;base64,' + item.imagen" class="card-img-top p-3" style="height: 200px; object-fit: contain;" alt="...">
+        <div class="card-body text-center">
+          <h5 class="card-title">{{item.descripcion}}</h5>
+          <p class="card-text text-primary fs-4 fw-bold">${{item.precio}}</p>
+          <div class="d-grid gap-2">
+            <button class="btn btn-success" (click)="addCarrito(item.articuloId)"><i class="bi bi-cart-plus"></i> Añadir al carrito</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="modalCarrito" tabindex="-1" aria-labelledby="modalCarritoLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-0 shadow">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title" id="modalCarritoLabel">
+          <i class="bi bi-check-circle-fill me-2"></i> ¡Producto añadido!
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body text-center py-4">
+        <p class="fs-5">El artículo se ha agregado correctamente a tu carrito de compras.</p>
+        <div class="text-muted small">¿Qué deseas hacer a continuación?</div>
+      </div>
+      <div class="modal-footer justify-content-center border-0 pb-4">
+        <button type="button" class="btn btn-outline-secondary px-4" data-bs-dismiss="modal">
+          Seguir comprando
+        </button>
+        <a href="/carrito" class="btn btn-success px-4">
+          Ir al carrito <i class="bi bi-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
