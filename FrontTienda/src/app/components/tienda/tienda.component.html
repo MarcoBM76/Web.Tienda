@@ -1,0 +1,71 @@
+<app-nav></app-nav>
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-4 mb-4">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0"><i class="bi bi-shop me-2"></i>Nueva Tienda</h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="tiendaForm" (ngSubmit)="addTienda()">
+            <div class="mb-3">
+              <label for="sucursal" class="form-label fw-bold">Nombre de la Sucursal</label>
+              <input formControlName="sucursal" type="text" class="form-control" id="sucursal" placeholder="Ej. Sucursal Norte">
+            </div>
+            <div class="mb-3">
+              <label for="direccion" class="form-label fw-bold">Dirección</label>
+              <textarea formControlName="direccion" class="form-control" id="direccion" rows="3" placeholder="Calle, Número y Colonia"></textarea>
+            </div>
+            <button type="submit" class="btn w-100"
+                    [ngClass]="isEditMode ? 'btn-warning' : 'btn-success'"
+                    [disabled]="tiendaForm.invalid">
+              <i class="bi" [ngClass]="isEditMode ? 'bi-pencil-square' : 'bi-plus-lg'"></i>
+              {{ isEditMode ? ' Actualizar Tienda' : ' Agregar Tienda' }}
+            </button>
+            <button *ngIf="isEditMode" type="button" class="btn btn-link w-100 mt-2" (click)="resetearFormulario()">
+              Cancelar edición
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="card shadow-sm">
+        <div class="card-header bg-light">
+          <h5 class="mb-0 text-dark">Tiendas Registradas</h5>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th style="width: 5%">#</th>
+                <th style="width: 30%">Sucursal</th>
+                <th style="width: 50%">Dirección</th>
+                <th style="width: 15%" class="text-center">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let tienda of tiendas; count as total">
+                <td>1</td>
+                <td><span class="fw-bold">{{tienda.sucursal}}</span></td>
+                <td>{{tienda.direccion}}</td>
+                <td class="text-center">
+                  <button class="btn btn-outline-primary btn-sm me-2" (click)="prepararEdicion(tienda)">
+                    <i class="bi bi-pencil"></i>
+                  </button>
+                  <button (click)="deleteTienda(tienda.tiendaId)" class="btn btn-outline-danger btn-sm" title="Eliminar Tienda">
+                    <i class="bi bi-trash-fill"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer bg-white text-muted small">
+          Total de tiendas: {{tiendas.length}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

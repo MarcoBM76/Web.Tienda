@@ -9,6 +9,7 @@ namespace DataAccess.Interfaces
         Task<ClienteArticulo> AddClienteArticulo(ClienteArticulo clienteArticulo);
         Task<bool> DeleteClienteArticulo(ClienteArticulo clienteArticulo);
         Task<bool> UpdateClienteArticulo(ClienteArticulo clienteArticulo);
+        IEnumerable<ClienteArticulo> GetAllArticuloByClienteId(int clienteId);
 
     }
 }

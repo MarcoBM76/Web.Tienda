@@ -1,0 +1,66 @@
+<app-nav></app-nav>
+
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card shadow">
+        <div class="card-header bg-dark text-white">
+          <h5 class="mb-0">{{ isEditMode ? 'Editar' : 'Nuevo' }} Cliente</h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="clienteForm" (ngSubmit)="guardarCliente()">
+            <div class="mb-2">
+              <label class="form-label">Nombre</label>
+              <input type="text" formControlName="nombre" class="form-control">
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Apellido Paterno</label>
+              <input type="text" formControlName="apellidoP" class="form-control">
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Apellido Materno</label>
+              <input type="text" formControlName="apellidoM" class="form-control">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Dirección</label>
+              <textarea formControlName="direccion" class="form-control" rows="2"></textarea>
+            </div>
+            <button type="submit" [disabled]="clienteForm.invalid"
+                    [class]="isEditMode ? 'btn btn-warning w-100' : 'btn btn-primary w-100'">
+              {{ isEditMode ? 'Actualizar' : 'Registrar' }}
+            </button>
+            <button *ngIf="isEditMode" (click)="finalizarAccion()" class="btn btn-link w-100 mt-2">Cancelar</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="table-responsive">
+        <table class="table table-striped align-middle shadow-sm">
+          <thead class="table-dark">
+            <tr>
+              <th>Nombre Completo</th>
+              <th>Dirección</th>
+              <th class="text-center">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of clientes">
+              <td>{{ c.nombre }} {{ c.apellidoP }} {{ c.apellidoM }}</td>
+              <td>{{ c.direccion }}</td>
+              <td class="text-center">
+                <button (click)="prepararEdicion(c)" class="btn btn-sm btn-outline-info me-2">
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button (click)="eliminar(c.clienteId)" class="btn btn-sm btn-outline-danger">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

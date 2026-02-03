@@ -29,6 +29,9 @@ namespace DataAccess.Repositories
 
         public async Task<bool> DeleteTienda(Tiendum tienda)
         {
+            var relaciones = _context.ArticuloTienda.Where(at => at.IdTienda == tienda.TiendaId);
+            _context.ArticuloTienda.RemoveRange(relaciones);
+
             _context.Tienda.Remove(tienda);
             var result = await _context.SaveChangesAsync();
             return result > 0;

@@ -4,7 +4,7 @@ using Entities;
 
 namespace BussinessLogic.Features.ClienteArticulos.DTO_s
 {
-    public class ClienteArticuloDTO
+    public class ClienteArticuloDTO : ArticuloDTO
     {
         public int Id { get; set; }
         public int? ClienteId { get; set; }

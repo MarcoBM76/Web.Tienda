@@ -44,7 +44,7 @@ namespace BussinessLogic.Features.ArticuloTienda
             return _articuloTiendaRepository.GetAllArticuloTienda().Select(articuloTienda => new ArticuloTiendaDTO
             {
                 Id = articuloTienda.Id,
-                IdArticulo = articuloTienda.IdArticulo,
+                ArticuloId = articuloTienda.IdArticulo,
                 IdTienda = articuloTienda.IdTienda,
                 Fecha = articuloTienda.Fecha ?? DateTime.MinValue,
                 Articulo = articuloTienda.IdArticuloNavigation != null ? new ArticuloDTO
@@ -53,11 +53,12 @@ namespace BussinessLogic.Features.ArticuloTienda
                     Codigo = articuloTienda.IdArticuloNavigation.Codigo,
                     Descripcion = articuloTienda.IdArticuloNavigation.Descripcion,
                     Precio = articuloTienda.IdArticuloNavigation.Precio,
-                    Imagen = articuloTienda.IdArticuloNavigation.Imagen,
+                    Imagen = Convert.ToBase64String(articuloTienda.IdArticuloNavigation.Imagen),
                     Stock = articuloTienda.IdArticuloNavigation.Stock
                 } : null,
-                Tiendum = articuloTienda.IdTiendaNavigation != null ? new TiendaDTO
+                Tienda = articuloTienda.IdTiendaNavigation != null ? new TiendaDTO
                 {
+                    TiendaId = articuloTienda.IdTiendaNavigation.TiendaId,
                     Direccion = articuloTienda.IdTiendaNavigation.Direccion,
                     Sucursal = articuloTienda.IdTiendaNavigation.Sucursal,
                 } : null
@@ -74,7 +75,7 @@ namespace BussinessLogic.Features.ArticuloTienda
             return new ArticuloTiendaDTO
             {
                 Id = articuloTienda.Id,
-                IdArticulo = articuloTienda.IdArticulo,
+                ArticuloId = articuloTienda.IdArticulo,
                 IdTienda = articuloTienda.IdTienda,
                 Fecha = articuloTienda.Fecha ?? DateTime.MinValue,
                 Articulo = articuloTienda.IdArticuloNavigation != null ? new ArticuloDTO
@@ -83,11 +84,11 @@ namespace BussinessLogic.Features.ArticuloTienda
                     Codigo = articuloTienda.IdArticuloNavigation.Codigo,
                     Descripcion = articuloTienda.IdArticuloNavigation.Descripcion,
                     Precio = articuloTienda.IdArticuloNavigation.Precio,
-                    Imagen = articuloTienda.IdArticuloNavigation.Imagen,
+                    Imagen = Convert.ToBase64String(articuloTienda.IdArticuloNavigation.Imagen!),
                     Stock = articuloTienda.IdArticuloNavigation.Stock
 
                 } : null,
-                Tiendum = articuloTienda.IdTiendaNavigation != null ? new TiendaDTO
+                Tienda = articuloTienda.IdTiendaNavigation != null ? new TiendaDTO
                 {
                     Direccion = articuloTienda.IdTiendaNavigation.Direccion,
                     Sucursal = articuloTienda.IdTiendaNavigation.Sucursal,

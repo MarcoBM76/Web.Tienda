@@ -72,6 +72,7 @@ namespace BussinessLogic.Features.Clientes
         {
             return _clienteRepository.GetAllClientes().Select(cliente => new ClienteDTO
             {
+                ClienteId = cliente.ClienteId,
                 Nombre = cliente.Nombre,
                 ApellidoP = cliente.ApellidoP,
                 ApellidoM = cliente.ApellidoM,

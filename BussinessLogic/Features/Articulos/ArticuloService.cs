@@ -17,14 +17,14 @@ namespace BussinessLogic.Features.Articulos
 
         public  async Task<int> AddArticuloAsync(AddArticuloDTO articuloDTO)
         {
-            var articuloId = await _articuloRepository.AddArticulo(new Articulo
+           var articuloId = await _articuloRepository.AddArticulo(new Articulo
             {
                 Codigo = articuloDTO.Codigo,
                 Descripcion = articuloDTO.Descripcion,
                 Precio = articuloDTO.Precio,
-                Imagen = articuloDTO.Imagen,
+                Imagen = ConvertBase64ToByteArray(articuloDTO.Imagen!),
                 Stock = articuloDTO.Stock
-            });
+            }, articuloDTO.TiendaId);
             return articuloId;
         }
 
@@ -43,10 +43,11 @@ namespace BussinessLogic.Features.Articulos
         {
             return _articuloRepository.GetAllArticulos().Select(articulo => new ArticuloDTO
             {
+                ArticuloId = articulo.ArticuloId,
                 Codigo = articulo.Codigo,
                 Descripcion = articulo.Descripcion,
                 Precio = articulo.Precio,
-                Imagen = articulo.Imagen,
+                Imagen = Convert.ToBase64String(articulo.Imagen!),
                 Stock = articulo.Stock
             });
         }
@@ -65,7 +66,7 @@ namespace BussinessLogic.Features.Articulos
                 Codigo = articulo.Codigo,
                 Descripcion = articulo.Descripcion,
                 Precio = articulo.Precio,
-                Imagen = articulo.Imagen,
+                Imagen = Convert.ToBase64String(articulo.Imagen!),
                 Stock = articulo.Stock
             };
         }
@@ -78,10 +79,22 @@ namespace BussinessLogic.Features.Articulos
                 Codigo = articuloDTO.Codigo,
                 Descripcion = articuloDTO.Descripcion,
                 Precio = articuloDTO.Precio,
-                Imagen = articuloDTO.Imagen,
+                Imagen = ConvertBase64ToByteArray(articuloDTO.Imagen!),
                 Stock = articuloDTO.Stock
             });
 
+        }
+
+        private byte[]? ConvertBase64ToByteArray(string base64String)
+        {
+            if (string.IsNullOrEmpty(base64String))
+            {
+                return new byte[] { };
+            }
+            var base64Part = base64String.Contains(",")
+                             ? base64String.Split(',')[1]
+                             : base64String;
+            return Convert.FromBase64String(base64Part);
         }
     }
 }

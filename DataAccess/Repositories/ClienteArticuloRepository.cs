@@ -28,7 +28,7 @@ namespace DataAccess.Repositories
 
         public async Task<bool> DeleteClienteArticulo(ClienteArticulo clienteArticulo)
         {
-            await Task.Run(() => { _context.ClienteArticulos.Remove(clienteArticulo); });
+            _context.ClienteArticulos.Remove(clienteArticulo);
             await _context.SaveChangesAsync();
             return true;
         }
@@ -62,6 +62,14 @@ namespace DataAccess.Repositories
             contextClienteArticulo.Fecha = clienteArticulo.Fecha;
             await _context.SaveChangesAsync();
             return true;
+        }
+
+        public IEnumerable<ClienteArticulo> GetAllArticuloByClienteId(int clienteId)
+        {
+            return _context.ClienteArticulos
+                .Where(ca => ca.IdCliente == clienteId)
+                .Include(ca => ca.IdArticuloNavigation)
+                .ToList();
         }
     }
 }

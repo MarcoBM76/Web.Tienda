@@ -39,16 +39,12 @@ public partial class TiendaDbContext : DbContext
             entity.Property(e => e.Descripcion)
                 .HasMaxLength(500)
                 .IsUnicode(false);
-            entity.Property(e => e.Imagen)
-                .HasMaxLength(250)
-                .IsUnicode(false);
         });
 
         modelBuilder.Entity<ArticuloTiendum>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Articulo__3214EC071A2B10D0");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Fecha)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
@@ -86,7 +82,6 @@ public partial class TiendaDbContext : DbContext
 
             entity.ToTable("ClienteArticulo");
 
-            entity.Property(e => e.Id).ValueGeneratedNever();
             entity.Property(e => e.Fecha)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");

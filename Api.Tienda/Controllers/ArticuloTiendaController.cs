@@ -14,6 +14,7 @@ namespace Api.Tienda.Controllers
         {
             _articuloTiendaService = articuloTiendaService;
         }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetArticuloTiendaId([FromRoute] int id)
         {
@@ -22,18 +23,21 @@ namespace Api.Tienda.Controllers
                 ? Ok(articuloTienda)
                 : NotFound();
         }
+
         [HttpGet]
         public IActionResult GetAllArticuloTienda()
         {
             var articuloTiendas = _articuloTiendaService.GetAllArticuloTienda();
             return Ok(articuloTiendas);
         }
+
         [HttpPost]
         public async Task<IActionResult> AddArticuloTienda([FromBody] AddArticuloTiendaDTO articuloTienda)
         {
             var articuloTiendaId = await _articuloTiendaService.AddArticuloTienda(articuloTienda);
             return CreatedAtAction(nameof(GetArticuloTiendaId), new { id = articuloTiendaId }, articuloTiendaId);
         }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteArticuloTienda([FromRoute] int id)
         {

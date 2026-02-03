@@ -61,3 +61,6 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+
+//Scaffold - Dbcontext Name = DbTienda Microsoft.EntityFrameworkCore.SqlServer - startupProject Api.Tienda - project DataAccess - outputDir.. / Entities - contextDir Context - context TiendaDbContext - force

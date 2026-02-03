@@ -8,6 +8,7 @@ namespace BussinessLogic.Features.Articulos.DTO_s
 {
     public class AddArticuloDTO
     {
+        public int TiendaId { get; set; }
         public string Codigo { get; set; } = null!;
 
         public string? Descripcion { get; set; }

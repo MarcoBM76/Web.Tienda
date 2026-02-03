@@ -13,16 +13,28 @@ namespace DataAccess.Repositories
             _context = context;
         }
 
-        public async Task<int> AddArticulo(Articulo articulo)
+        public async Task<int> AddArticulo(Articulo articulo, int tiendaId)
         {
             await _context.Articulos.AddAsync(articulo);
+
+            await _context.SaveChangesAsync();
+
+            await _context.ArticuloTienda.AddAsync(new ArticuloTiendum { 
+                IdArticulo = articulo.ArticuloId,
+                IdTienda = tiendaId,
+                Fecha = DateTime.Now });
+
             await _context.SaveChangesAsync();
 
             return articulo.ArticuloId;
+
         }
 
         public async Task<bool> DeleteArticulo(Articulo articulo)
         {
+            var relaciones = _context.ArticuloTienda.Where(at => at.IdArticulo == articulo.ArticuloId);
+            _context.ArticuloTienda.RemoveRange(relaciones);
+
             _context.Articulos.Remove(articulo);
             var result = await _context.SaveChangesAsync();
             return result > 0;

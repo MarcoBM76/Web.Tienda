@@ -38,9 +38,10 @@ namespace Api.Tienda.Controllers
             return CreatedAtAction(nameof(GetTiendaById), new { tiendaId = tiendaId }, null);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateTienda(UpdateTiendaDTO updateTiendaDTO)
+        [HttpPut("{tiendaId}")]
+        public async Task<IActionResult> UpdateTienda([FromRoute] int tiendaId, UpdateTiendaDTO updateTiendaDTO)
         {
+            updateTiendaDTO.TiendaId = tiendaId;
             var response = await _tiendaService.UpdateTienda(updateTiendaDTO);
 
             return response
@@ -48,8 +49,8 @@ namespace Api.Tienda.Controllers
                 : BadRequest();
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> DeleteTienda([FromQuery] int tiendaId)
+        [HttpDelete("{tiendaId}")]
+        public async Task<IActionResult> DeleteTienda([FromRoute] int tiendaId)
         {
             var response = await _tiendaService.DeleteTienda(tiendaId);
             return response

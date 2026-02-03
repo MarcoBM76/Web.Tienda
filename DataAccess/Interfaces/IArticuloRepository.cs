@@ -6,7 +6,7 @@ namespace DataAccess.Interfaces
     {
         Task<Articulo?> GetArticuloById(int articuloId);
         IEnumerable<Articulo> GetAllArticulos();
-        Task<int> AddArticulo(Articulo articulo);
+        Task<int> AddArticulo(Articulo articulo, int tiendaId);
         Task<bool> UpdateArticulo(Articulo articulo);
         Task<bool> DeleteArticulo(Articulo articulo);
 

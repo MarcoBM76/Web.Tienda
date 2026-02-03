@@ -29,7 +29,8 @@ namespace DataAccess.Repositories
 
         public IEnumerable<ArticuloTiendum> GetAllArticuloTienda()
         {
-            return _context.ArticuloTienda.Include(ca => ca.IdArticuloNavigation)
+            return _context.ArticuloTienda
+                .Include(ca => ca.IdArticuloNavigation)
                 .Include(ca => ca.IdTiendaNavigation)
                 .ToList();
 

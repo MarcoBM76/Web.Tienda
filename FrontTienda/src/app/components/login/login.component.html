@@ -1,0 +1,30 @@
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+  <div class="card shadow border-0" style="width: 400px;">
+    <div class="card-body p-5">
+      <h3 class="text-center mb-4 fw-bold text-primary">Iniciar Sesión</h3>
+
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label class="form-label">Usuario</label>
+          <input type="text" formControlName="usuario" class="form-control"
+                 [class.is-invalid]="loginForm.get('usuario')?.touched && loginForm.get('usuario')?.invalid">
+          <div class="invalid-feedback">Usuario requerido (min. 4 caracteres).</div>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Contraseña</label>
+          <input type="password" formControlName="password" class="form-control"
+                 [class.is-invalid]="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+        </div>
+
+        <div *ngIf="errorLogin" class="alert alert-danger p-2 small">
+          Credenciales incorrectas. Intenta de nuevo.
+        </div>
+
+        <button type="submit" [disabled]="loginForm.invalid" class="btn btn-primary w-100 py-2">
+          Entrar <i class="bi bi-box-arrow-in-right"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

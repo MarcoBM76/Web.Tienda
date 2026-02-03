@@ -39,15 +39,17 @@ namespace Api.Tienda.Controllers
             return CreatedAtAction(nameof(GetClienteById), new { clienteId = clienteId }, clienteId);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateCliente([FromBody] UpdateClienteDTO cliente)
+        [HttpPut("{clienteId}")]
+        public async Task<IActionResult> UpdateCliente([FromRoute] int clienteId, [FromBody] UpdateClienteDTO cliente)
         {
+            cliente.ClienteId = clienteId;
             var response = await _clienteRepository.UpdateCliente(cliente);
 
             return response
                 ? Ok()
                 : BadRequest();
         }
+
         [HttpDelete("{clienteId}")]
         public async Task<IActionResult> DeleteCliente([FromRoute] int clienteId)
         {

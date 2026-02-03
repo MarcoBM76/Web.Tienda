@@ -39,7 +39,7 @@ namespace Api.Tienda.Controllers
             return CreatedAtAction(nameof(GetArticuloById), new { articuloId = articulo }, null);
         }
 
-        [HttpPut]
+        [HttpPut("{articuloId}")]
         public async Task<IActionResult> UpdateArticulo(UpdateArticuloDTO updateArticuloDTO)
         {
             var response = await _articuloService.UpdateArticuloAsync(updateArticuloDTO);
@@ -47,8 +47,9 @@ namespace Api.Tienda.Controllers
                 ? Ok()
                 : BadRequest();
         }
-        [HttpDelete]
-        public async Task<IActionResult> DeleteArticulo([FromQuery] int articuloId)
+
+        [HttpDelete("{articuloId}")]
+        public async Task<IActionResult> DeleteArticulo([FromRoute] int articuloId)
         {
             var response = await _articuloService.DeleteArticuloAsync(articuloId);
             return response

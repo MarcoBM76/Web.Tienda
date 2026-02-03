@@ -21,10 +21,9 @@ namespace BussinessLogic.Features.ClienteArticulos
         {
             var clienteArticulo = await _clienteArticuloRepository.AddClienteArticulo(new ClienteArticulo
             {
-                Id = addClienteArticulo.Id,
                 IdCliente = addClienteArticulo.ClienteId,
                 IdArticulo = addClienteArticulo.ArticuloId,
-                Fecha = addClienteArticulo.Fecha
+                Fecha = DateTime.Now
             });
             return clienteArticulo.Id;
         }
@@ -39,6 +38,23 @@ namespace BussinessLogic.Features.ClienteArticulos
             }
             
             return await _clienteArticuloRepository.DeleteClienteArticulo(clienteArticulo);
+        }
+
+        public IEnumerable<ClienteArticuloDTO> GetAllArticuloByClienteId(int clienteId)
+        {
+            var clienteArticulo = _clienteArticuloRepository.GetAllArticuloByClienteId(clienteId);
+
+            return clienteArticulo.Select(clienteArticulo =>
+                new ClienteArticuloDTO
+                {
+                    Id = clienteArticulo.Id,
+                    ArticuloId = clienteArticulo.IdArticuloNavigation!.ArticuloId,
+                    Codigo = clienteArticulo.IdArticuloNavigation.Codigo,
+                    Descripcion = clienteArticulo.IdArticuloNavigation.Descripcion,
+                    Precio = clienteArticulo.IdArticuloNavigation.Precio,
+                    Imagen = Convert.ToBase64String(clienteArticulo.IdArticuloNavigation.Imagen!),
+                    Stock = clienteArticulo.IdArticuloNavigation.Stock
+                });
         }
 
         public IEnumerable<ClienteArticuloDTO> GetAllClienteArticulo()
@@ -64,7 +80,7 @@ namespace BussinessLogic.Features.ClienteArticulos
                     Codigo = clienteArticulo.IdArticuloNavigation.Codigo,
                     Descripcion = clienteArticulo.IdArticuloNavigation.Descripcion,
                     Precio = clienteArticulo.IdArticuloNavigation.Precio,
-                    Imagen = clienteArticulo.IdArticuloNavigation.Imagen,
+                    Imagen = Convert.ToBase64String(clienteArticulo.IdArticuloNavigation.Imagen!),
                     Stock = clienteArticulo.IdArticuloNavigation.Stock
                 } : null
             });
@@ -98,7 +114,7 @@ namespace BussinessLogic.Features.ClienteArticulos
                     Codigo = clienteArticulo.IdArticuloNavigation.Codigo,
                     Descripcion = clienteArticulo.IdArticuloNavigation.Descripcion,
                     Precio = clienteArticulo.IdArticuloNavigation.Precio,
-                    Imagen = clienteArticulo.IdArticuloNavigation.Imagen,
+                    Imagen = Convert.ToBase64String(clienteArticulo.IdArticuloNavigation.Imagen!),
                     Stock = clienteArticulo.IdArticuloNavigation.Stock
                 } : null
             };

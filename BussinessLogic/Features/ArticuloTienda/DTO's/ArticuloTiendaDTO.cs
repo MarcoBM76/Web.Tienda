@@ -3,13 +3,13 @@ using BussinessLogic.Features.Tienda.DTO_s;
 
 namespace BussinessLogic.Features.ArticuloTienda.DTO_s
 {
-    public class ArticuloTiendaDTO
+    public class ArticuloTiendaDTO : ArticuloDTO
     {
         public int Id { get; set; }
-        public int? IdArticulo { get; set; }
+        public int? ArticuloId { get; set; }
         public int? IdTienda { get; set; }
         public DateTime? Fecha { get; set; }
-        public TiendaDTO? Tiendum { get; set; }
+        public TiendaDTO? Tienda { get; set; }
         public ArticuloDTO? Articulo { get; set; }
     }
 }

@@ -1,0 +1,105 @@
+<app-nav></app-nav>
+
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card shadow-sm border-0">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">{{ isEditMode ? 'Editar' : 'Nuevo' }} Artículo</h5>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="articuloForm" (ngSubmit)="guardar()">
+            <div class="row g-2">
+              <div class="col-6 mb-2">
+                <label class="form-label">Código</label>
+                <input type="text" formControlName="codigo" class="form-control form-control-sm">
+              </div>
+              <div class="col-6 mb-2">
+                <label class="form-label">Precio</label>
+                <input type="number" formControlName="precio" class="form-control form-control-sm">
+              </div>
+            </div>
+            <div class="mb-2">
+              <label class="form-label">Descripción</label>
+              <input type="text" formControlName="descripcion" class="form-control form-control-sm">
+            </div>
+            <div class="mb-3">
+              <label class="form-label fw-bold">Imagen del Producto</label>
+
+              <input type="file"
+                     class="form-control form-control-sm"
+                     accept="image/*"
+                     (change)="onFileSelected($event)">
+
+              <div class="mt-2 text-center border rounded p-2 bg-light" style="min-height: 100px;">
+                <img *ngIf="articuloForm.get('imagen')?.value"
+                     [src]="articuloForm.get('imagen')?.value"
+                     class="img-thumbnail"
+                     style="max-height: 120px;">
+
+                <div *ngIf="!articuloForm.get('imagen')?.value" class="text-muted pt-4">
+                  <i class="bi bi-image fs-2"></i>
+                  <p class="small">Sin imagen seleccionada</p>
+                </div>
+              </div>
+
+              <input type="hidden" formControlName="imagen">
+            </div>
+            <div class="row g-2">
+              <div class="col-6 mb-2">
+                <label class="form-label">Stock</label>
+                <input type="number" formControlName="stock" class="form-control form-control-sm">
+              </div>
+              <div class="col-6 mb-3">
+                <label class="form-label">Tienda</label>
+                <select formControlName="idTienda" class="form-select form-select-sm">
+                  <option value="">Seleccione...</option>
+                  <option *ngFor="let t of tiendas" [value]="t.tiendaId">{{ t.sucursal }}</option>
+                </select>
+              </div>
+            </div>
+            <button type="submit" [disabled]="articuloForm.invalid"
+                    [class]="isEditMode ? 'btn btn-warning w-100' : 'btn btn-success w-100'">
+              <i class="bi bi-save me-1"></i> {{ isEditMode ? 'Actualizar' : 'Guardar' }}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <div class="card border-0 shadow-sm">
+        <div class="table-responsive">
+          <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+              <tr>
+                <th>Imagen</th>
+                <th>Descripción</th>
+                <th>Tienda</th>
+                <th>Stock</th>
+                <th>Precio</th>
+                <th class="text-center">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let a of articulos">
+                <td><img [src]="'data:image/png;base64,' + a.imagen" class="rounded" width="40" height="40"></td>
+                <td>
+                  <div class="fw-bold">{{ a.descripcion }}</div>
+                  <small class="text-muted">{{ a.codigo }}</small>
+                </td>
+                <td><span class="badge bg-info text-dark">{{ a.nombreTienda }}</span></td>
+                <td>{{ a.stock }}</td>
+                <td class="fw-bold">{{ a.precio | currency }}</td>
+                <td class="text-center">
+                  <button (click)="prepararEdicion(a)" class="btn btn-sm btn-outline-primary me-1"><i class="bi bi-pencil"></i></button>
+                  <button (click)="eliminar(a.articuloId)" class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -23,7 +23,10 @@ namespace DataAccess.Repositories
 
         public async Task<bool> DeleteCliente(Cliente cliente)
         {
-            await Task.Run(() => _context.Clientes.Remove(cliente));
+            var relaciones = _context.ClienteArticulos.Where(at => at.IdCliente == cliente.ClienteId);
+            _context.ClienteArticulos.RemoveRange(relaciones);
+
+            _context.Clientes.Remove(cliente);
             var result =  await _context.SaveChangesAsync();
             return result > 0;
         }

@@ -10,7 +10,7 @@ public partial class Articulo
 
     public int Precio { get; set; }
 
-    public string? Imagen { get; set; }
+    public byte[]? Imagen { get; set; }
 
     public int Stock { get; set; }
 
